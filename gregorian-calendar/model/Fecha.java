@@ -23,10 +23,29 @@ public class Fecha {
 
     /* Dada una fecha, determinar si ésta es válida. El resultado debe 
     ser un valor booleano, True o False.*/
-    public boolean fecha_es_valida() {
+    public boolean fecha_es_valida(int anno, int mes, int dia) {
+        if (dia> 0 && 0<mes && mes<=12 && anno>1600) {
+            switch (mes) {
+                case 2:
+                    if ((dia <= 29 && this.bisiesto(anno)) || (dia <=28) ) {
+                        return true;
+                    }
+                    return false;
+                case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                    if( dia <= 31) {
+                        return true;
+                    } 
+                    return false;
+                default:
+                if (dia <= 30 ){
+                    return true;
+                }
+                return false;
+            }
+        }
         return true;
     }
-
+    // Comprobar año, comprobar mes, comprobar diar (excepcion febrero si es bisiesto) 
     /* Dada una fecha válida, determinar la fecha del día siguiente.
     El resultado debe ser una fecha válida (objeto de clase fecha,
     con tres números enteros positivos, que corresponde a una fecha
