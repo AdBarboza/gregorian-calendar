@@ -164,13 +164,75 @@ public class CalendarGregorian {
     el calendario de ese año en formato de 4 secuencias (‘filas’) de 3 meses 
     cada una. 
     El resultado debe lucir semejante al que se muestra al final de este enunciado. */
-    public void imprimir_4x3() {
+    public void imprimir_4x3(int anno) {
+        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        System.out.println("Calendario del año :" + anno + " D.C.");
+        String[][][] anho = new String[12][6][7];
+        int cantDias = 0;
+        int diaActual = this.dia_primero_enero(new Date(anno,1,1));
+        for (int i = 0; i < 12; i++) {
+            switch (i + 1) {
+                case 2:
+                    if (bisiesto(new Date(anno,1,1)))
+                        cantDias = 29;
+                    else
+                        cantDias = 28;
+                    break;
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    cantDias = 31;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    cantDias = 30;
+                    break;
+            }
+            int semAct = 0;
+            for (int o = 0; o < cantDias; o++) {
+                anho[i][semAct][diaActual] = Integer.toString(o + 1);
+                if (diaActual == 6)
+                    semAct += 1;
+                diaActual = (diaActual + 1) % 7;
+            }
+        }
+        for(int i=0;i<12;i++){
+            for(int e=0;e<6;e++){
+                for(int u=0;u<7;u++){
+                    String a = anho[i][e][u];
+                    if(a == null)
+                        anho[i][e][u]="";
+
+                }
+            }
+            System.out.println();
+        }
+        for (int i = 0; i < 12; i = i + 3) {
+            System.out.format("%20s%20s%20s%20s%20s%20s\n", meses[i], "|", meses[i + 1], "|", meses[i + 2], "|");
+            for (int e = 0; e < 3; e++) {
+                System.out.format("%5s%5s%5s%5s%5s%5s%5s%5s", "D", "L", "K", "M", "J", "V", "S", "|");
+                
+            }
+            for(int p=0;p<6;p++){
+                System.out.println();
+                System.out.format("%5s%5s%5s%5s%5s%5s%5s%5s", anho[i][p][0] , anho[i][p][1],anho[i][p][2] ,anho[i][p][3], anho[i][p][4],anho[i][p][5] , anho[i][p][6], "|");
+                System.out.format("%5s%5s%5s%5s%5s%5s%5s%5s", anho[i+1][p][0] , anho[i+1][p][1],anho[i+1][p][2] ,anho[i+1][p][3], anho[i+1][p][4],anho[i+1][p][5] , anho[i+1][p][6], "|");
+                System.out.format("%5s%5s%5s%5s%5s%5s%5s%5s", anho[i+2][p][0] , anho[i+2][p][1],anho[i+2][p][2] ,anho[i+2][p][3], anho[i+2][p][4],anho[i+2][p][5] , anho[i+2][p][6], "|");
+
+            }
+            System.out.println();
+        }
 
     }
 
     public static void main(String[] args) {
         // TODO code application logic here
-        
     }
 
 }
