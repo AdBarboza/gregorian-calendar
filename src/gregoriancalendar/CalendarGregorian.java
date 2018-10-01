@@ -231,7 +231,7 @@ public class CalendarGregorian {
 
     }
     
-        /* Dada una fecha válida f y un número entero no-negativo n, determinar la fecha
+    /* Dada una fecha válida f y un número entero no-negativo n, determinar la fecha
     que está n días naturales en el futuro. El resultado debe ser una fecha válida. */
     public Date fecha_futura(Date f, int n) {
         if (!this.fecha_es_valida(f) && n<=0) {
@@ -348,8 +348,22 @@ public class CalendarGregorian {
     que está n días hábiles en el futuro. El resultado debe ser una fecha válida que
     corresponda a un día hábil. Note que f puede corresponder a la fecha de un día no hábil. */
     public Date fecha_futura_habil(Date f, int n){
+        if(n<=0){
+            System.out.println("ERROR: n debe ser mayor a 0");
+            return null;
+        }
+        else{
+            Date fechafutura = fecha_futura(f,n);
+            int diasemana = dia_semana(fechafutura);
 
-        return null;
+            if(diasemana == 0 || diasemana == 6){
+                System.out.println("ERROR: La fecha no devuelve un día hábil");
+                return null;
+            }
+            else{
+                return fechafutura;
+            }
+        }
     }
 
     /* Dadas dos fechas válidas, f1 y f2, sin importar si f1≤f2 o f2≤f1, determinar
@@ -378,11 +392,16 @@ public class CalendarGregorian {
         //Pruebas para dias_entre
         date2.toString();
         date3.toString();
-        System.out.println("dias antre: " + calendar1.dias_entre(date1, date2));
-        System.out.println("dias antre: " + calendar1.dias_entre(date2, date3));
+        System.out.println("dias entre: " + calendar1.dias_entre(date1, date2));
+        System.out.println("dias entre: " + calendar1.dias_entre(date2, date3));
         
         //Pruebas dia_semana
         System.out.println("dia semana: " + calendar1.dia_semana(date4));
+        
+        //Pruebas fecha_futura_habil
+        System.out.println("fecha_futura_habil: " + calendar1.fecha_futura_habil(date4, 4));
+        //System.out.println("fecha_futura_habil: " + calendar1.fecha_futura_habil(date4, 0));
+        //System.out.println("fecha_futura_habil: " + calendar1.fecha_futura_habil(date4, 6));
     }
 
 }
