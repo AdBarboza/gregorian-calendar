@@ -302,7 +302,6 @@ public class CalendarGregorian {
             System.out.println("ERROR: La o las fechas no son válidan");
         }
         
-        int resultado = 0;
         int temp1;
         int temp2;
         int dia1 = f1.getDay();
@@ -313,18 +312,17 @@ public class CalendarGregorian {
         int anno2 = f2.getYear();
         
         if (anno1 == anno2 && mes1 == mes2 && dia1 == dia2){ //son la misma fecha
-            return resultado;        
+            return 0;        
         }
         else{ //fechas diferentes
             temp1 = (int)((anno1*365.25)+((mes1-1)*30.627)+dia1); //resultados redondeados
             temp2 = (int)((anno2*365.25)+((mes2-1)*30.627)+dia2);
             if(temp1 < temp2){
-                resultado = temp2 - temp1; 
+                return temp2 - temp1; 
             }
             else{
-                resultado = temp1 - temp2;
+                return temp1 - temp2;
             }
-        return resultado;
         }
     }
 
