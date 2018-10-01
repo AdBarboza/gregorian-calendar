@@ -2,6 +2,8 @@ package gregoriancalendar;
 
 import model.Date;
 
+import javax.activation.DataSource;
+
 /**
  *
  * @author Adrián, Dafne, JuanDeDios
@@ -363,20 +365,42 @@ public class CalendarGregorian {
             }
         }
     }
-
+    public Date getMenor(Date f1, Date f2){
+        if(f1.getYear() <= f2.getYear() && f1.getMonth()<=f2.getMonth() && f1.getDay()<=f2.getDay()){
+            return f1;
+        }
+        else
+            return f2;
+    }
     /* Dadas dos fechas válidas, f1 y f2, sin importar si f1≤f2 o f2≤f1, determinar
     el número de días hábiles entre las dos fechas. Si f1=f2, entonces días_habiles_entre(f1,f2)=0.
     El resultado debe ser un número entero no negativo. */
     public int dias_habiles_entre(Date f1, Date f2){
+        int days = dias_entre(f1,f2);
+        int res;
+        if(days%7==0){
+            res = days-days/7*2;
+        }
+        else{
+            Date tmp = getMenor(f1,f2);
+            res = 0;
+            if(days>7)
+                tmp = fecha_futura(tmp,days-days%7);
+            for(int i=0;i<days;i++){
+                tmp = fecha_futura(tmp,1);
+                int diasemana = dia_semana(tmp);
+                if(diasemana!=0 && diasemana!=6)res+=1;
 
-        return 0;
+            }
+        }
+        return res;
     }
 
     public static void main(String[] args) {
         CalendarGregorian calendar1 = new CalendarGregorian();
         Date date1 = new Date(2018,9,30);
         Date date2 = new Date(2018,10,20);
-        Date date3 = new Date(2003,10,20);
+        Date date3 = new Date(2018,9,30);
         Date date4 = new Date(1953,8,2);
         
         
@@ -392,6 +416,7 @@ public class CalendarGregorian {
         date3.toString();
         System.out.println("dias entre: " + calendar1.dias_entre(date1, date2));
         System.out.println("dias entre: " + calendar1.dias_entre(date2, date3));
+        System.out.println("dias habiles entre: " + calendar1.dias_habiles_entre(date2, date3));
         
         //Pruebas dia_semana
         System.out.println("dia semana: " + calendar1.dia_semana(date4));
