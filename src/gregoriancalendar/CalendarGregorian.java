@@ -332,9 +332,16 @@ public class CalendarGregorian {
     con la siguiente codificación: 0=domingo, 1=lunes, 2=martes, 3=miércoles,
     4=jueves, 5=viernes, 6=sábado. El resultado debe ser un número entero, conforme
     a la codificación indicada. */
-    public int dia_semana(Date fecha){
+    public int dia_semana(Date fecha){ //Algoritmo de Zeller
+        if (!this.fecha_es_valida(fecha)) {
+            System.out.println("ERROR: La o las fechas no son válidas");
+        }
         
-        return 0;
+        int a = (14-fecha.getMonth())/12;
+        int y = fecha.getYear() - a;
+        int m = fecha.getMonth()+12*a-2;
+        
+        return (fecha.getDay() + y + (y/4) - (y/100) + (y/400) + (31*m)/12)% 7;
     }
 
     /* Dada una fecha válida f y un número entero no-negativo n, determinar la fecha
@@ -358,6 +365,7 @@ public class CalendarGregorian {
         Date date1 = new Date(2018,9,30);
         Date date2 = new Date(2018,10,20);
         Date date3 = new Date(2003,10,20);
+        Date date4 = new Date(1953,8,2);
         
         
         //Pruebas fecha_futura
@@ -372,6 +380,9 @@ public class CalendarGregorian {
         date3.toString();
         System.out.println("dias antre: " + calendar1.dias_entre(date1, date2));
         System.out.println("dias antre: " + calendar1.dias_entre(date2, date3));
+        
+        //Pruebas dia_semana
+        System.out.println("dia semana: " + calendar1.dia_semana(date4));
     }
 
 }
