@@ -230,9 +230,148 @@ public class CalendarGregorian {
         }
 
     }
+    
+        /* Dada una fecha válida f y un número entero no-negativo n, determinar la fecha
+    que está n días naturales en el futuro. El resultado debe ser una fecha válida. */
+    public Date fecha_futura(Date f, int n) {
+        if (!this.fecha_es_valida(f) && n<=0) {
+            return null;
+        }
+        
+        Date temp = null;
+        int newDay;
+        int dia = f.getDay();
+        int mes = f.getMonth();
+        int anno = f.getYear();
+
+        for(int i=0; n>i; ++i){
+            switch (dia) {
+                case 31:
+                    newDay = 1;
+                    break;
+                case 30:
+                    if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+                    newDay = 1;
+                    } else {
+                     newDay = 31;
+                    }
+                    break;
+                case 29:
+                    if (mes == 2) {
+                        newDay = 1;
+                    } else {
+                        newDay = 30;
+                    }
+                    break;
+                case 28:
+                    if (mes == 2) {
+                        if (this.bisiesto(new Date(0,0,anno))) {
+                            newDay = 29;
+                        } else {
+                            newDay = 1;
+                        }
+                    } else {
+                        newDay = 29;
+                    }
+                    break;
+                default:
+                    newDay = dia + 1;
+                    break;
+            }
+            if (newDay == 1) {
+                if (mes == 12) {
+                    temp = new Date(anno + 1, 1, 1);
+                } else {
+                    temp = new Date(anno, mes + 1, 1);
+                }
+            } else {
+                temp = new Date(anno, mes, newDay);
+            }
+            dia = temp.getDay();
+            mes = temp.getMonth();
+            anno = temp.getYear();
+        }
+        return temp;
+    }
+
+    /* Dadas dos fechas válidas, f1 y f2, sin importar si f1≤f2 o f2≤f1, determinar
+    el número de días naturales entre las dos fechas. Si f1=f2, entonces días_entre(f1,f2)=0.
+    El resultado debe ser un número entero no negativo.*/
+    public int dias_entre(Date f1, Date f2){
+        if (!this.fecha_es_valida(f1) && !this.fecha_es_valida(f2)) {
+            System.out.println("ERROR: La o las fechas no son válidas");
+        }
+        
+        int resultado = 0;
+        int temp1;
+        int temp2;
+        int dia1 = f1.getDay();
+        int mes1 = f1.getMonth();
+        int anno1 = f1.getYear();
+        int dia2 = f2.getDay();
+        int mes2 = f2.getMonth();
+        int anno2 = f2.getYear();
+        
+        if (anno1 == anno2 && mes1 == mes2 && dia1 == dia2){ //son la misma fecha
+            return resultado;        
+        }
+        else{ //fechas diferentes
+            temp1 = (int)((anno1*365.25)+((mes1-1)*30.627)+dia1); //resultados redondeados
+            temp2 = (int)((anno2*365.25)+((mes2-1)*30.627)+dia2);
+            if(temp1 < temp2){
+                resultado = temp2 - temp1; 
+            }
+            else{
+                resultado = temp1 - temp2;
+            }
+        return resultado;
+        }
+    }
+
+    /* Dada una fecha válida, determinar el día de la semana que le corresponde,
+    con la siguiente codificación: 0=domingo, 1=lunes, 2=martes, 3=miércoles,
+    4=jueves, 5=viernes, 6=sábado. El resultado debe ser un número entero, conforme
+    a la codificación indicada. */
+    public int dia_semana(Date fecha){
+        
+        return 0;
+    }
+
+    /* Dada una fecha válida f y un número entero no-negativo n, determinar la fecha
+    que está n días hábiles en el futuro. El resultado debe ser una fecha válida que
+    corresponda a un día hábil. Note que f puede corresponder a la fecha de un día no hábil. */
+    public Date fecha_futura_habil(Date f, int n){
+
+        return null;
+    }
+
+    /* Dadas dos fechas válidas, f1 y f2, sin importar si f1≤f2 o f2≤f1, determinar
+    el número de días hábiles entre las dos fechas. Si f1=f2, entonces días_habiles_entre(f1,f2)=0.
+    El resultado debe ser un número entero no negativo. */
+    public int dias_habiles_entre(Date f1, Date f2){
+
+        return 0;
+    }
 
     public static void main(String[] args) {
-        // TODO code application logic here
+        CalendarGregorian calendar1 = new CalendarGregorian();
+        Date date1 = new Date(2018,9,30);
+        Date date2 = new Date(2018,10,20);
+        Date date3 = new Date(2003,10,20);
+        
+        
+        //Pruebas fecha_futura
+        date1.toString();
+        System.out.println("fecha futura: " + calendar1.fecha_futura(date1, 10));
+        //System.out.println("fecha futura: " + calendar1.fecha_futura(date1, 0));
+        //System.out.println("fecha futura: " + calendar1.fecha_futura(date1, 365));
+        //System.out.println("fecha futura: " + calendar1.fecha_futura(date1, 50));
+        
+        //Pruebas para dias_entre
+        date2.toString();
+        date3.toString();
+        System.out.println("dias antre: " + calendar1.dias_entre(date1, date2));
+        System.out.println("dias antre: " + calendar1.dias_entre(date2, date3));
     }
 
 }
