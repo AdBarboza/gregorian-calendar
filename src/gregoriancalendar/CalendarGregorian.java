@@ -299,7 +299,7 @@ public class CalendarGregorian {
     El resultado debe ser un número entero no negativo.*/
     public int dias_entre(Date f1, Date f2){
         if (!this.fecha_es_valida(f1) && !this.fecha_es_valida(f2)) {
-            System.out.println("ERROR: La fecha no es válida");
+            System.out.println("ERROR: La o las fechas no son válidan");
         }
         
         int resultado = 0;
@@ -334,7 +334,7 @@ public class CalendarGregorian {
     a la codificación indicada. */
     public int dia_semana(Date fecha){ //Algoritmo de Zeller
         if (!this.fecha_es_valida(fecha)) {
-            System.out.println("ERROR: La o las fechas no son válidas");
+            System.out.println("ERROR: La fecha no es válida");
         }
         
         int a = (14-fecha.getMonth())/12;
