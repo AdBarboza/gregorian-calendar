@@ -1,2 +1,2 @@
 # gregorian-calendar
-Gregorian claendar in Java for didactic practices QA
+Gregorian calendar in Java for didactic practices QA
